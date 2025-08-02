@@ -11,7 +11,7 @@ public record DatosCrearTopico (
     @NotNull
     String mensaje,
     @NotNull
-    String curso
+    Curso curso
 ){
 
 }

@@ -1,5 +1,6 @@
 package com.alura.Forohub.domain.topico;
 
+import com.alura.Forohub.domain.curso.Curso;
 import com.alura.Forohub.domain.respuesta.Respuesta;
 import com.alura.Forohub.domain.usuarios.Usuario;
 import jakarta.persistence.*;
@@ -38,7 +39,9 @@ public class Topico {
     @JoinColumn(name = "usuario_id")
     private Usuario autor;
 
-    private String curso; // todo temporalmente String se va cambiar conforme se desarrollo entidades JPA
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id")
+    private Curso curso; // todo temporalmente String se va cambiar conforme se desarrollo entidades JPA
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
@@ -50,6 +53,6 @@ public class Topico {
         this.fecha = LocalDateTime.now();
         this.estado = Estado.SIN_RESPUESTA; ;
         this.curso = datos.curso();
-        // this.autor = autor; todo esta asignacion se corregira al implementar los modelos de login
+        //this.autor = autor; // todo esta asignacion se corregira al implementar los modelos de login
     }
 }

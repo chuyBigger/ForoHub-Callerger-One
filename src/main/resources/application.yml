@@ -1,6 +1,6 @@
 spring:
   flyway:
-    enabled: false
+    enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/foro_hub_challenger
@@ -9,10 +9,9 @@ spring:
 
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
 
 server:
@@ -24,6 +23,6 @@ api:
     token:
       secret: ${JWT_SECRET:12345678}
 
-
-
-
+logging:
+  level:
+    org.flywaydb: DEBUG
