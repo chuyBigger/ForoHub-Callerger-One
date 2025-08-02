@@ -1,10 +1,11 @@
 package com.alura.Forohub.controller;
 
-import com.alura.Forohub.domain.topico.DatosRegistroTopico;
+import com.alura.Forohub.domain.topico.DatosCrearTopico;
 import com.alura.Forohub.domain.topico.Topico;
 import com.alura.Forohub.domain.topico.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public void registrar(@RequestBody @Valid DatosRegistroTopico datos){
+    public ResponseEntity crearTopico(@RequestBody @Valid DatosCrearTopico datos){
         topicoRepository.save(new Topico(datos));
+        return ResponseEntity.ok(datos);
     }
-
 }

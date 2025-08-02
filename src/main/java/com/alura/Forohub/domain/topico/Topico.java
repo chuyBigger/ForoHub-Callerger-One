@@ -1,6 +1,5 @@
 package com.alura.Forohub.domain.topico;
 
-import com.alura.Forohub.domain.curso.Curso;
 import com.alura.Forohub.domain.respuesta.Respuesta;
 import com.alura.Forohub.domain.usuarios.Usuario;
 import jakarta.persistence.*;
@@ -13,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -27,22 +28,28 @@ public class Topico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
     private String mensaje;
-    private LocalDateTime fechaCreacion;
-    private Boolean status;
-    @Transient
-    private Usuario autor;
-    @Transient
-    private Curso curso;
-    @Transient
-    private Respuesta respuestas;
+    private LocalDateTime fecha;
+    private Estado estado;// Valor Default
 
-    public Topico(@Valid DatosRegistroTopico datos) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario autor;
+
+    private String curso; // todo temporalmente String se va cambiar conforme se desarrollo entidades JPA
+
+    @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Respuesta> respuestas = new ArrayList<>();
+
+    public Topico(@Valid DatosCrearTopico datos) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
-        this.fechaCreacion = LocalDateTime.now();
-        this.status = false;
+        this.fecha = LocalDateTime.now();
+        this.estado = Estado.SIN_RESPUESTA; ;
+        this.curso = datos.curso();
+        // this.autor = autor; todo esta asignacion se corregira al implementar los modelos de login
     }
 }
