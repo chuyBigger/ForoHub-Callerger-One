@@ -2,11 +2,17 @@ package com.alura.Forohub.domain.curso;
 
 public enum Categoria {
 
-    MATEMATICAS,
-    FISICA,
-    QUIMICA,
-    BIOLOGIA,
-    HISTORIA,
-    LITERATURA
+    PROGRAMACION,
+    BASES_DE_DATOS,
+    FRAMEWORKS,
+    DEVOPS,
+    SEGURIDAD,
+    INTELIGENCIA_ARTIFICIAL,
+    BIG_DATA,
+    CLOUD_COMPUTING,
+    SISTEMAS_OPERATIVOS,
+    DISENO_UX_UI,
+    VIDEOJUEGOS,
+    CIENCIA_DATOS
 
 }

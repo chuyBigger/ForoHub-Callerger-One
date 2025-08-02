@@ -25,10 +25,16 @@ public class Respuesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String mensaje;
+
     @ManyToOne
     @JoinColumn(name = "topico_id")
     private Topico topico;
+
     private LocalDateTime fechaCreacion;
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
     private Usuario autor;
+
     private String Solucion;
 }

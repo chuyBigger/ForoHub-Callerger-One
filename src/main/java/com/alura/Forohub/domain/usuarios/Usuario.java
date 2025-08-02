@@ -1,6 +1,7 @@
 package com.alura.Forohub.domain.usuarios;
 
 import com.alura.Forohub.domain.perfiles.Perfil;
+import com.alura.Forohub.domain.respuesta.Respuesta;
 import com.alura.Forohub.domain.topico.Topico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,9 @@ public class Usuario {
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topico> topicos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Respuesta> respuestas = new ArrayList<>();
 
     public Usuario(DatosRegistroUsuario datos) {
         this.id = null;
