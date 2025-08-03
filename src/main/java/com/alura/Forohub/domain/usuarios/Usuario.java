@@ -4,6 +4,7 @@ import com.alura.Forohub.domain.perfiles.Perfil;
 import com.alura.Forohub.domain.respuesta.Respuesta;
 import com.alura.Forohub.domain.topico.Topico;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,14 +43,16 @@ public class Usuario {
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
 
-    public Usuario(DatosRegistroUsuario datos) {
+    public Usuario(@Valid DatosRegistroUsuario datos, Perfil perfil) {
         this.id = null;
         this.activo = true;
         this.nombre = datos.nombre();
         this.correoElectronico = datos.correoElectronico();
         this.contrasena = datos.contrasena();
-        this.perfil = datos.perfil();
+        this.perfil = perfil;
     }
+
+
 
     public void eliminar() {
         this.activo = false;

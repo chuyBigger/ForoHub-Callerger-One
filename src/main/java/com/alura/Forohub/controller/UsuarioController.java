@@ -1,5 +1,7 @@
 package com.alura.Forohub.controller;
 
+import com.alura.Forohub.domain.perfiles.Perfil;
+import com.alura.Forohub.domain.perfiles.PerfilRepository;
 import com.alura.Forohub.domain.usuarios.DatosDetalleUsuario;
 import com.alura.Forohub.domain.usuarios.DatosRegistroUsuario;
 import com.alura.Forohub.domain.usuarios.Usuario;
@@ -20,6 +22,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PerfilRepository perfilRepository;
+
     @PostMapping
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroUsuario datos, UriComponentsBuilder uriComponentsBuilder) {
 
@@ -28,8 +33,17 @@ public class UsuarioController {
             return ResponseEntity
                     .badRequest()
                     .body("⚠️ Error el Correo Electronico ya se encuentra registrado. ");
-        } // Guardar Nuevo Usuario
-        Usuario nuevoUsuario = usuarioRepository.save(new Usuario(datos));
+        }
+
+        // Buscar perfil 3
+        Perfil perfilUsuario = perfilRepository.findById(3L)
+                .orElseThrow(()-> new RuntimeException("Perfil por defecto no encontrado"));
+
+        // crear un nuevo usuario con perfil
+        Usuario nuevoUsuario = new Usuario(datos, perfilUsuario);
+
+        // Guardar Nuevo Usuario
+        usuarioRepository.save(nuevoUsuario);
         var uri = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(nuevoUsuario.getId()).toUri();
         return ResponseEntity.created(uri).body("✅ Usuario registrado Exitosamente:" + new DatosDetalleUsuario(nuevoUsuario));
 

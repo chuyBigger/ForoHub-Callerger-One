@@ -4,10 +4,11 @@ import java.time.LocalDateTime;
 
 public record DatosDetalleTopico(
         Long id,
-        Long idUsuario,
         String titulo,
-        String mensaje,
-        LocalDateTime fecha,
-        String curso
+        String mendaje,
+        String nombreCurso
 ) {
+    public DatosDetalleTopico(Topico datos){
+        this(datos.getId(), datos.getTitulo(), datos.getMensaje(), datos.getCurso().getNombre());
+    }
 }

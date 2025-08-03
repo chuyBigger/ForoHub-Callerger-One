@@ -40,19 +40,22 @@ public class Topico {
     private Usuario autor;
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "curso_id")
     private Curso curso; // todo temporalmente String se va cambiar conforme se desarrollo entidades JPA
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
 
-    public Topico(@Valid DatosCrearTopico datos) {
+    public Topico(@Valid DatosCrearTopico datos, Curso curso) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fecha = LocalDateTime.now();
         this.estado = Estado.SIN_RESPUESTA; ;
-        this.curso = datos.curso();
+        this.curso = curso;
         //this.autor = autor; // todo esta asignacion se corregira al implementar los modelos de login
     }
+
+
 }
