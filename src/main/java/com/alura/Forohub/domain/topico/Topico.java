@@ -33,6 +33,9 @@ public class Topico {
     private String titulo;
     private String mensaje;
     private LocalDateTime fecha;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Estado estado;// Valor Default
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,7 +45,8 @@ public class Topico {
     @ManyToOne(fetch = FetchType.LAZY)
 
     @JoinColumn(name = "curso_id")
-    private Curso curso; // todo temporalmente String se va cambiar conforme se desarrollo entidades JPA
+    private Curso curso;
+    private Boolean activo;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
@@ -54,6 +58,7 @@ public class Topico {
         this.fecha = LocalDateTime.now();
         this.estado = Estado.SIN_RESPUESTA; ;
         this.curso = curso;
+        this.activo = true;
         //this.autor = autor; // todo esta asignacion se corregira al implementar los modelos de login
     }
 

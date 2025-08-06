@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record DatosDetalleTopico(
         Long id,
         String titulo,
-        String mendaje,
+        String mensaje,
         String nombreCurso
 ) {
     public DatosDetalleTopico(Topico datos){

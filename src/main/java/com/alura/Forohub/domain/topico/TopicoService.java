@@ -1,9 +1,7 @@
 package com.alura.Forohub.domain.topico;
 
 import com.alura.Forohub.domain.curso.CursoRepository;
-import com.alura.Forohub.domain.usuarios.DatosRegistroUsuario;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.action.internal.EntityActionVetoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
