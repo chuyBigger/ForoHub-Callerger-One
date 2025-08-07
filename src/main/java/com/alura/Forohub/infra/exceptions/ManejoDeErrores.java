@@ -1,4 +1,4 @@
-package com.alura.Forohub.infra;
+package com.alura.Forohub.infra.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 //import org.hibernate.mapping.Map;

@@ -9,8 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Table(name = "usuarios")
@@ -21,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +33,10 @@ public class Usuario {
     private Boolean activo;
     private String nombre;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String correoElectronico;
+
+    @Column(name = "contrasena")
     private String contrasena;
 
     @ManyToOne
@@ -53,8 +59,42 @@ public class Usuario {
     }
 
 
-
     public void eliminar() {
         this.activo = false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.correoElectronico;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

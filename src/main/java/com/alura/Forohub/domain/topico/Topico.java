@@ -7,16 +7,14 @@ import jakarta.persistence.*;
 
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -62,5 +60,17 @@ public class Topico {
         //this.autor = autor; // todo esta asignacion se corregira al implementar los modelos de login
     }
 
+    public void actualizarInformacionTopico(@Valid DatosActualizarTopico datos) {
+        if (datos.titulo() != null) {
+            this.titulo = datos.titulo();
+        }
+        if (datos.mensaje() != null) {
+            this.mensaje = datos.mensaje();
+        }
+    }
 
+
+    public void eliminar() {
+        this.activo = false;
+    }
 }

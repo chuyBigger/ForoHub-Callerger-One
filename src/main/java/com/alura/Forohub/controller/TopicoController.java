@@ -56,12 +56,23 @@ public class TopicoController {
     }
 
     @Transactional
-    @PutMapping
-    public ResponseEntity actualizarTopico(@RequestBody @Valid DatosActualizarTopico datos) {
-
-        var medico = repository.getReferenceById(datos.id());
-        medico.actualizarInformaciones(datos);
-
-        return ResponseEntity.ok(new DatosDetallesMedico(medico));
+    @PutMapping("/{id}")
+    public ResponseEntity actualizarTopico(@PathVariable Long id, @RequestBody @Valid DatosActualizarTopico datos) {
+        topicoService.actualizarTopico(id, datos);
+        var topico = topicoRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DatosDetalleTopico(topico));
     }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity eliminarTopico(@PathVariable Long id) {
+        var buscarTopico = topicoRepository.findById(id);
+        if (buscarTopico.isPresent()) {
+            var topico = buscarTopico.get();
+            topico.eliminar();
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
