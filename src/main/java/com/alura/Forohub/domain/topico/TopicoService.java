@@ -2,17 +2,12 @@ package com.alura.Forohub.domain.topico;
 
 import com.alura.Forohub.domain.curso.Curso;
 import com.alura.Forohub.domain.curso.CursoRepository;
+import com.alura.Forohub.domain.topico.validaciones.ValidadorDeTopicos;
 import com.alura.Forohub.domain.usuarios.Usuario;
-import com.alura.Forohub.infra.security.SecurityFilter;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class TopicoService {
@@ -23,7 +18,13 @@ public class TopicoService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    @Autowired
+    private ValidadorDeTopicos validadorDeTopicos;
+
     public Topico crearTopico(DatosCrearTopico datos){
+
+        DatosDetalleTopico detalle = new DatosDetalleTopico(null, datos.titulo(), datos.mensaje(), null,null);
+        validadorDeTopicos.validar(detalle);
         var autor = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var curso = cursoRepository.findById(datos.cursoId())
                 .orElseThrow(() -> new EntityNotFoundException("Curso no encontrado"));

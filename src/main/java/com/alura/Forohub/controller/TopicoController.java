@@ -48,6 +48,7 @@ public class TopicoController {
         return ResponseEntity.ok(page);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity detalleTopico(@PathVariable Long id) {
         var topico = topicoRepository.getReferenceById(id);

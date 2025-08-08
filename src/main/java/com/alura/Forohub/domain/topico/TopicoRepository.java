@@ -17,4 +17,7 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
     Page<Topico> buscarPorNombreYAnio(@Param("nombre") String nombre, @Param("anio") Integer anio, Pageable pageable);
 
 
+    boolean existsByTitulo(String titulo);
+
+    boolean existsByMensaje(String mensaje);
 }

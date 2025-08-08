@@ -26,7 +26,7 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
+
 
     @PostMapping
     public ResponseEntity registrar(@RequestBody @Valid DatosRegistroUsuario datos, UriComponentsBuilder uriComponentsBuilder) {
@@ -40,6 +40,7 @@ public class UsuarioController {
         var page = usuarioRepository.findAllByActivoTrue(pageable).map(DatosListaUsuarios::new);
         return ResponseEntity.ok(page);
     }
+
 
     @Transactional
     @DeleteMapping("/{id}")
