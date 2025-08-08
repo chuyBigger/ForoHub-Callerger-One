@@ -28,8 +28,13 @@ public class Topico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "titulo")
     private String titulo;
+
+    @Column(name = "mensaje")
     private String mensaje;
+
+    @Column(name = "fecha")
     private LocalDateTime fecha;
 
     @Enumerated(EnumType.STRING)
@@ -44,20 +49,22 @@ public class Topico {
 
     @JoinColumn(name = "curso_id")
     private Curso curso;
-    private Boolean activo;
+
+    @Column(name = "activo")
+    private boolean activo;
 
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
 
-    public Topico(@Valid DatosCrearTopico datos, Curso curso) {
+    public Topico(@Valid DatosCrearTopico datos, Curso curso, Usuario autor) {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fecha = LocalDateTime.now();
-        this.estado = Estado.SIN_RESPUESTA; ;
+        this.estado = Estado.SIN_RESPUESTA;
         this.curso = curso;
         this.activo = true;
-        //this.autor = autor; // todo esta asignacion se corregira al implementar los modelos de login
+        this.autor = autor;
     }
 
     public void actualizarInformacionTopico(@Valid DatosActualizarTopico datos) {
@@ -68,7 +75,6 @@ public class Topico {
             this.mensaje = datos.mensaje();
         }
     }
-
 
     public void eliminar() {
         this.activo = false;

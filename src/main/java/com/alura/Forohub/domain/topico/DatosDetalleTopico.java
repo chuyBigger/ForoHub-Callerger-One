@@ -1,6 +1,5 @@
 package com.alura.Forohub.domain.topico;
 
-import java.time.LocalDateTime;
 
 public record DatosDetalleTopico(
         Long id,

@@ -42,7 +42,7 @@ public class TopicoController {
     @PostMapping("/buscar")
     public ResponseEntity<Page<DatosListaTopicos>> listaTopicosBusqueda(@RequestBody DatosBusquedaTopicos datos, @PageableDefault(size = 10, sort = "titulo") Pageable paguinacion) {
         var page = topicoRepository.buscarPorNombreYAnio(datos.titulo(), datos.anio(), paguinacion).map(DatosListaTopicos::new);
-        if (page.isEmpty()){
+        if (page.isEmpty()) {
             return ResponseEntity.noContent().build(); // para retornar 204
         }
         return ResponseEntity.ok(page);
@@ -66,13 +66,12 @@ public class TopicoController {
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity eliminarTopico(@PathVariable Long id) {
-        var buscarTopico = topicoRepository.findById(id);
-        if (buscarTopico.isPresent()) {
-            var topico = buscarTopico.get();
-            topico.eliminar();
+        boolean eliminado = topicoService.eliminarTopico(id);
+        if (eliminado) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+
     }
 
 }

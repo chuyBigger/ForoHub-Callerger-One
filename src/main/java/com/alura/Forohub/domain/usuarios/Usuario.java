@@ -30,7 +30,9 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Boolean activo;
+
     private String nombre;
 
     @Column(nullable = false, unique = true)
@@ -49,15 +51,14 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respuesta> respuestas = new ArrayList<>();
 
-    public Usuario(@Valid DatosRegistroUsuario datos, Perfil perfil) {
+    public Usuario(@Valid DatosRegistroUsuario datos, Perfil perfil, String contrasenaEncode) {
         this.id = null;
         this.activo = true;
         this.nombre = datos.nombre();
         this.correoElectronico = datos.correoElectronico();
-        this.contrasena = datos.contrasena();
+        this.contrasena = contrasenaEncode;
         this.perfil = perfil;
     }
-
 
     public void eliminar() {
         this.activo = false;

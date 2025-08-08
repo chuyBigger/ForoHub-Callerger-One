@@ -10,10 +10,10 @@ public record DatosListaTopicos(
     String mensaje,
     LocalDateTime fecha,
     Estado estado,
-    Usuario autor,
+    String autor,
     String curso
 ) {
     public DatosListaTopicos(Topico topico){
-        this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFecha(), topico.getEstado(), topico.getAutor(), topico.getCurso().getNombre());
+        this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFecha(), topico.getEstado(), topico.getAutor().getNombre(), topico.getCurso().getNombre());
     }
 }
