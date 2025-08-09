@@ -21,9 +21,9 @@ public class TopicoService {
     @Autowired
     private ValidadorDeTopicos validadorDeTopicos;
 
-    public Topico crearTopico(DatosCrearTopico datos){
+    public Topico crearTopico(DatosCrearTopico datos) {
 
-        DatosDetalleTopico detalle = new DatosDetalleTopico(null, datos.titulo(), datos.mensaje(), null,null);
+        DatosDetalleTopico detalle = new DatosDetalleTopico(null, datos.titulo(), datos.mensaje(), null, null);
         validadorDeTopicos.validar(detalle);
         var autor = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var curso = cursoRepository.findById(datos.cursoId())
@@ -35,23 +35,22 @@ public class TopicoService {
     public void actualizarTopico(Long id, DatosActualizarTopico datos) {
         Topico topico = topicoRepository.getReferenceById(id);
 
-        if (datos.cursoId() != null){
+        if (datos.cursoId() != null) {
             Curso curso = cursoRepository.getReferenceById(datos.cursoId());
             topico.setCurso(curso);
         }
         topico.actualizarInformacionTopico(datos);
     }
 
+    public boolean eliminarTopico(Long id) {
 
-    public boolean eliminarTopico(Long id){
-
-            var buscarTopico = topicoRepository.findById(id);
-            if (buscarTopico.isPresent()) {
-                var topico = buscarTopico.get();
-                topico.eliminar();
-                return true;
-            }
-            return false;
+        var buscarTopico = topicoRepository.findById(id);
+        if (buscarTopico.isPresent()) {
+            var topico = buscarTopico.get();
+            topico.eliminar();
+            return true;
+        }
+        return false;
 
     }
 

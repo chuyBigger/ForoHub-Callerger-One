@@ -48,7 +48,7 @@ public class TopicoController {
         return ResponseEntity.ok(page);
     }
 
-
+    @Transactional
     @GetMapping("/{id}")
     public ResponseEntity detalleTopico(@PathVariable Long id) {
         var topico = topicoRepository.getReferenceById(id);
@@ -76,3 +76,4 @@ public class TopicoController {
     }
 
 }
+

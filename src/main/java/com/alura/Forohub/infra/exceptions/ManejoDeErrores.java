@@ -16,7 +16,7 @@ import java.util.Map;
 public class ManejoDeErrores {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity tratarError404(){
+    public ResponseEntity tratarError404() {
         return ResponseEntity.notFound().build();
     }
 
@@ -40,7 +40,6 @@ public class ManejoDeErrores {
         String mensaje = "Tipo de dato incorrecto para el parámetro: " + ex.getName();
         return ResponseEntity.badRequest().body(mensaje);
     }
-
 
 
 }
