@@ -3,6 +3,7 @@ package com.alura.Forohub.domain.respuesta;
 import com.alura.Forohub.domain.topico.Topico;
 import com.alura.Forohub.domain.usuarios.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,5 +37,16 @@ public class Respuesta {
     @JoinColumn(name = "autor_id")
     private Usuario autor;
 
-    private String Solucion;
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean solucion;
+
+
+    public Respuesta(@Valid DatosCrearRespuesta datos, Topico topico, Usuario autor) {
+        this.id=null;
+        this.mensaje=datos.mensaje();
+        this.topico = topico;
+        this.fechaCreacion = LocalDateTime.now();
+        this.autor = autor;
+        this.solucion = false;
+    }
 }

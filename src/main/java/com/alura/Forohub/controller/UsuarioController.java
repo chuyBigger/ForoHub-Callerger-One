@@ -45,7 +45,6 @@ public class UsuarioController {
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity eliminar(@PathVariable Long id) {
-        System.out.println("vamos a eliminar !!!!!");
         var usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("⚠️ Usuario No encontrado¡");

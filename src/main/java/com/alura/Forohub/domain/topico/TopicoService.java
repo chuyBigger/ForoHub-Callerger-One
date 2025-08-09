@@ -33,10 +33,11 @@ public class TopicoService {
     }
 
     public void actualizarTopico(Long id, DatosActualizarTopico datos) {
-        Topico topico = topicoRepository.getReferenceById(id);
-
-        if (datos.cursoId() != null) {
-            Curso curso = cursoRepository.getReferenceById(datos.cursoId());
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Topico No encontrado"));
+        if (datos.cursoId() != null){
+            Curso curso = cursoRepository.findById(datos.cursoId())
+                    .orElseThrow(()-> new EntityNotFoundException("El curso seleccionado no existe"));
             topico.setCurso(curso);
         }
         topico.actualizarInformacionTopico(datos);

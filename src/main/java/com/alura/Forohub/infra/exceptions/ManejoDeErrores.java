@@ -2,6 +2,7 @@ package com.alura.Forohub.infra.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 //import org.hibernate.mapping.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -16,8 +17,10 @@ import java.util.Map;
 public class ManejoDeErrores {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity tratarError404() {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Map<String, String>> tratarError404(EntityNotFoundException e) {
+        Map<String, String> error = Map.of(
+                "error", "Recurso No encontrado","mensaje", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
